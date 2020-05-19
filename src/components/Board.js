@@ -6,7 +6,7 @@ import EditCard from './Edit'
 import AddSeq from './AddSeq'
 
 import Tone from 'tone'
-
+import { Canvas, useFrame } from 'react-three-fiber'
 
 export default class Board extends Component {
     constructor() {
@@ -18,6 +18,8 @@ export default class Board extends Component {
         this.handleAdd=this.handleAdd.bind(this)
         this.handleRemoveSequence=this.handleRemoveSequence.bind(this)
         this.handleAddSeq=this.handleAddSeq.bind(this)
+        
+        
      }
     state={
         sequenceCounter:2,
@@ -35,14 +37,12 @@ export default class Board extends Component {
         songId:[],
         userId:1,
         editSequences:[],
-        toneID:null
+        toneID:null,
+        test:[[],[]]
     }
    
 
-    setSynths(){
-       this.state.Sequences.forEach(sequence=>{console.log(sequence.props)})
-        
-    }
+       
   
     handlePlayButton=()=>{
         if(this.state.playing===false){
@@ -50,26 +50,32 @@ export default class Board extends Component {
             let    PlaySynths = [...this.state.synths]
             let    PlayNotes = [...this.state.notes]
             let    PlaySequences = [...this.state.Sequences]
-            this.setState({toneID: Tone.Transport.scheduleRepeat(repeat, '8n')})
-            Tone.Transport.start();
-            
-            function repeat(time) {
+           let  newTest=[...this.state.test]
+            var draw=0
+            let repeat=(time)=> {
                 let step = index % 8;
                 for (let i = 0; i < PlaySequences.length; i++) {
                   let synth = PlaySynths[i],
                       note = PlayNotes[i],
                       sequence = PlaySequences[i],
                       input = sequence[step];
-                  if (input===true) synth.triggerAttackRelease(note, '8n', time);
+                  if (input===true){ synth.triggerAttackRelease(note, '8n', time); 
+                  newTest[i][0]=step; 
+                  newTest.forEach(test=> test[0]===step?null:test[0]=null);
+                  this.setState({test:newTest})}
                 }
                 index++;
               }
-           
+              this.setState({toneID: Tone.Transport.scheduleRepeat(repeat, '8n')})
+              Tone.Transport.start();
             this.setState({playing:true})
         }else{
+            let newTests=[]
+            this.state.Sequences.forEach(s=>newTests.push([]))
             Tone.Transport.stop();
             Tone.Transport.clear(this.state.toneID);
             this.setState({playing:false})
+            this.setState({test:newTests})
         }
         
     }
@@ -78,15 +84,11 @@ export default class Board extends Component {
          if(newSeq[seqNum][noteNum] === false){
             newSeq[seqNum][noteNum]=true
             this.setState({Sequences:newSeq})
-            if (!e) var e = window.event;
-            e.cancelBubble = true;
-            if (e.stopPropagation) e.stopPropagation();
+           e.stopPropagation();
          }else{
             newSeq[seqNum][noteNum]=false
             this.setState({Sequences:newSeq})
-            if (!e) var e = window.event;
-            e.cancelBubble = true;
-            if (e.stopPropagation) e.stopPropagation();
+             e.stopPropagation();
          }
         
     }
@@ -105,7 +107,7 @@ export default class Board extends Component {
         let extractionOfIdNotes=[]
         let newNotes=[]
         let newSeqIds=[]
-
+        let newTests=[]
         var newSynthTypes=[]
         
         let newSequences= await fetch("http://localhost:3000/sequences")
@@ -114,14 +116,15 @@ export default class Board extends Component {
         .then(newData=>{
           return newData.map(s=> Object.values(s))
         })
-        console.log(newSequences)
+       
         newSequences.sort((s1,s2)=>s1[2]-s2[2])
-        console.log(newSequences)
+      
         newSequences.forEach(s=>extractionOfIdNotes.push(s.splice(0,4)))
 
         extractionOfIdNotes.forEach(s=>{
           newNotes.push(s[3])
           newSeqIds.push(s[0])
+          newTests.push([])
         })
 
         // return 
@@ -164,6 +167,7 @@ export default class Board extends Component {
         //  console.log(newNotes)
         //  console.log(newSeqIds)
         //  console.log(newSynths)
+        this.setState({test:newTests})
         this.setState({synthTypes:newSynthTypes})
         this.setState({Sequences:newSequences})
         this.setState({notes:newNotes})  
@@ -212,9 +216,9 @@ export default class Board extends Component {
     .then(res=>res.json())
     .then(data=> {return Object.values(data)})}))
 
-    console.log(sequenceIds)
+   
     sequenceIds.sort((seq1,seq2)=>seq1[2]-seq2[2])
-    console.log(sequenceIds)
+    
     
    let whatever = await Promise.all(sequenceIds.map( async(id,index)=>{
     return await  fetch("http://localhost:3000/synths",{
@@ -236,11 +240,13 @@ export default class Board extends Component {
         this.state.saveButton===false? this.setState({saveButton:true}):this.setState({saveButton:false})
     }
     
-    editSequenceClick=(index)=>{
+    editSequenceClick=(e,index)=>{
+      
       this.state.midiButton===false? this.setState({midiButton:true}):this.setState({midiButton:false})
-      console.log(this.state.midiButton)
-      console.log(index)
+     
+      
       this.state.editSequences.includes(index)? this.setState({editSequences:[...this.state.editSequences].filter(i=> i!=index)}): this.setState({editSequences:[...this.state.editSequences,index]})
+      
     }
 
     handleEdit(e,index){
@@ -255,7 +261,7 @@ export default class Board extends Component {
         newSequence.push(false)
        }
      }else if(e.target.length.value< newSequence.length){
-        console.log("texxxt")
+       
         let delta= newSequence.length-e.target.length.value
         let slicePos= e.target.length.value - 1
         newSequence.splice(slicePos,delta)
@@ -295,7 +301,7 @@ export default class Board extends Component {
     }
 
     handleAdd(e,seqNum){
-      console.log("add")
+      
       let newSequences=[...this.state.Sequences]
       newSequences[seqNum].push(false)
       this.setState({Sequences:newSequences})
@@ -306,7 +312,7 @@ export default class Board extends Component {
     }
 
     handleSubtract(e,seqNum){
-        console.log("subtract")
+        
         let newSequences=[...this.state.Sequences]
         newSequences[seqNum].pop()
         this.setState({Sequences:newSequences})
@@ -317,11 +323,26 @@ export default class Board extends Component {
 
     handleRemoveSequence(seqNum){
       let newSequences=[...this.state.Sequences]
+      let newNotes=[...this.state.notes]
+      let newSynths=[...this.state.synths]
+      let newSynthTypes=[...this.state.synthTypes]
+      let newTest=[...this.state.test]
       let newEditSequences=this.state.editSequences.filter(edit=> edit!=seqNum)
-      
+
+      newTest.pop()
       newSequences.splice(seqNum,1)
+      newNotes.splice(seqNum,1)
+      newSynths.splice(seqNum,1)
+      newSynthTypes.splice(seqNum,1)
+
+
+
       this.setState({Sequences:newSequences})
       this.setState({editSequences:newEditSequences})
+      this.setState({test:newTest})
+      this.setState({synths:newSynths})
+      this.setState({synthTypes:newSynthTypes})
+      this.setState({notes:newNotes})
     }
 
     addSequenceButton=()=>{
@@ -351,7 +372,7 @@ export default class Board extends Component {
     }
 
      
-
+     this.setState({test:[...this.state.test,[]]})
      this.setState({notes:[...this.state.notes,newNote]})
      this.setState({Sequences:[...this.state.Sequences,newSequence]})
      this.setState({synthTypes:[...this.state.synthTypes,newSynthType]})
@@ -361,8 +382,9 @@ export default class Board extends Component {
     }
 
     render() {
-   
-      const displaySequences=this.state.Sequences.map((sequence,index)=><Sequence key={index} handleSubtract={this.handleSubtract} handleAdd={this.handleAdd} editSequenceClick={this.editSequenceClick} handleNotePLay={this.handleNotePLay} seqNum={index} noteValues={sequence}/>)
+
+     
+      const displaySequences=this.state.Sequences.map((sequence,index)=><Sequence key={index} currentNote={this.state.test} handleSubtract={this.handleSubtract} note={this.state.notes[index]} handleAdd={this.handleAdd} editSequenceClick={this.editSequenceClick} handleNotePLay={this.handleNotePLay} seqNum={index} noteValues={sequence}/>)
       const editSequences= this.state.editSequences.map((sequence,index)=><EditCard key={index} editSynth={this.state.synths[sequence]} handleRemoveSequence={this.handleRemoveSequence} handleEdit={this.handleEdit}seqNote={this.state.notes[sequence]} seqSynthType={this.state.synthTypes[sequence]} seqLength={this.state.Sequences[sequence].length} seqNum={sequence}></EditCard>)   
         return (
             <div>
