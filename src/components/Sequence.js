@@ -24,7 +24,7 @@ export default class Sequence extends Component {
          }  
 
         let y= <group>{showNotes}</group>
-        console.log(this.props.note)
+       
         return (
           <div onClick={(e)=>this.props.editSequenceClick(e,this.props.seqNum)}>
          <button onClick={e=>this.props.handleSubtract(e,this.props.seqNum)} > - </button>  <Canvas><ambientLight/> <pointLight position={[10, 10, 10]}/> {y}</Canvas> <button onClick={e=>this.props.handleAdd(e,this.props.seqNum)}> + </button>

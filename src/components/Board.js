@@ -9,6 +9,7 @@ import VisualizerTest from './VisualizerTest'
 import Tone from 'tone'
 import Display from './Display'
 
+import Zzzaaa from './Zzzaaa'
 
 export default class Board extends Component {
     constructor() {
@@ -41,7 +42,7 @@ export default class Board extends Component {
         userId:1,
         editSequences:[],
         toneID:null,
-        test:[[],[]]
+        test:[[null],[null]]
     }
    
 
@@ -50,10 +51,10 @@ export default class Board extends Component {
     handlePlayButton=()=>{
         if(this.state.playing===false){
             let index=0
-            let    PlaySynths = [...this.state.synths]
-            let    PlayNotes = [...this.state.notes]
+            let    PlaySynths    = [...this.state.synths]
+            let    PlayNotes     = [...this.state.notes]
             let    PlaySequences = [...this.state.Sequences]
-           let  newTest=[...this.state.test]
+            let    newTest       = [...this.state.test]
             var draw=0
             let repeat=(time)=> {
                 let step = index % 8;
@@ -410,7 +411,7 @@ export default class Board extends Component {
        return(
       <Fragment>
     
-       <Display handleDisco={this.handleDiscoButton} sequences={this.state.Sequences}/>
+       <Zzzaaa  handleDisco={this.handleDiscoButton} synths={this.state.synths} oldTests={this.state.tests}notes={this.state.notes} sequences={this.state.Sequences}/>
       
       </Fragment>
        )
