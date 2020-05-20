@@ -1,12 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component,Fragment } from 'react'
 import Sequence from './Sequence'
 import Load from './Load'
 import Save from './Save'
 import EditCard from './Edit'
 import AddSeq from './AddSeq'
 
+import VisualizerTest from './VisualizerTest'
 import Tone from 'tone'
-import { Canvas, useFrame } from 'react-three-fiber'
+import Display from './Display'
+
 
 export default class Board extends Component {
     constructor() {
@@ -33,6 +35,7 @@ export default class Board extends Component {
         saveButton:false,
         midiButton:false,
         addSequenceButton:false,
+        discoButton:false,
         sequenceIds:[],
         songId:[],
         userId:1,
@@ -380,14 +383,17 @@ export default class Board extends Component {
      this.setState({addSequenceButton:false})
 
     }
+    handleDiscoButton=()=>{
+      this.state.discoButton===false? this.setState({discoButton:true}):this.setState({discoButton:false})
+    }
 
     render() {
 
-     
+     if(this.state.discoButton===false){
       const displaySequences=this.state.Sequences.map((sequence,index)=><Sequence key={index} currentNote={this.state.test} handleSubtract={this.handleSubtract} note={this.state.notes[index]} handleAdd={this.handleAdd} editSequenceClick={this.editSequenceClick} handleNotePLay={this.handleNotePLay} seqNum={index} noteValues={sequence}/>)
       const editSequences= this.state.editSequences.map((sequence,index)=><EditCard key={index} editSynth={this.state.synths[sequence]} handleRemoveSequence={this.handleRemoveSequence} handleEdit={this.handleEdit}seqNote={this.state.notes[sequence]} seqSynthType={this.state.synthTypes[sequence]} seqLength={this.state.Sequences[sequence].length} seqNum={sequence}></EditCard>)   
         return (
-            <div>
+            <Fragment>
              {displaySequences}
              <button onClick={this.handlePlayButton}>{ this.state.playing===false? "false": "true"}</button>
              <button onClick={this.loadingButtonClick}>Saved Loops</button>
@@ -397,7 +403,17 @@ export default class Board extends Component {
              <button onClick={this.addSequenceButton}>Add Sequence</button>
              {this.state.addSequenceButton===false? null : <AddSeq handleAddSeq={this.handleAddSeq}/>}
              {editSequences}
-            </div>
+             <button onClick={this.handleDiscoButton}>Lets Disco</button>
+            </Fragment>
         )
+     }else{
+       return(
+      <Fragment>
+    
+       <Display handleDisco={this.handleDiscoButton} sequences={this.state.Sequences}/>
+      
+      </Fragment>
+       )
+     }
     }
 }
