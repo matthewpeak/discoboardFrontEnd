@@ -3,12 +3,23 @@ import * as THREE from 'three'
 import React, {  useRef, useMemo } from 'react'
 import {  useFrame } from 'react-three-fiber'
 
-function Particles({count,played,x}) {
+function Particles({note,count,played,x}) {
     
         
             const mesh = useRef()
             const dummy = useMemo(() => new THREE.Object3D(), [])
-          
+            var zex=x
+            const noteColor={
+              "A":"#09FBD3",
+              "B":"#08F7fe",
+              "D":"#E92efb",
+              "E":"#ff2079",
+              "F":"#ff6ec7",
+              "G":"#F5D300"
+            }
+
+
+
             const particles = useMemo(() => {
               const temp = []
               for (let i = 0; i < count; i++) {
@@ -25,22 +36,21 @@ function Particles({count,played,x}) {
           
             useFrame(state => {
              if(played===false){
-              particles.forEach((particle, i) => {
-                let { t, factor, speed, xFactor, yFactor, zFactor } = particle
-                t = particle.t += speed / 2
-                const a = Math.cos(t) + Math.sin(t * 1) / 10
-                const b = Math.sin(t) + Math.cos(t * 2) / 10
-                const s = Math.max(1.5, Math.cos(t) * 5)
-                dummy.position.set(
-                  (particle.mx / 10) * a + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
-                  (particle.my / 10) * b + yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
-                  (particle.my / 10) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
-                )
-                dummy.scale.set(s, s, s)
-                dummy.updateMatrix()
-                mesh.current.setMatrixAt(i, dummy.matrix)
-              })
-              mesh.current.instanceMatrix.needsUpdate = true
+              const time = state.clock.getElapsedTime()
+             
+                let i = 0
+                for (let x = 0; x < 10; x++)
+                  for (let y = 0; y < 10; y++)
+                    for (let z = 0; z < 10; z++) {
+                      const id = i++
+                      dummy.rotation.y = Math.sin(x / 4 + time) + Math.sin(y / 4 + time) + Math.sin(z / 4 + time)
+                      dummy.rotation.z = dummy.rotation.y * 2
+                      dummy.position.set(zex - x, 5 - y, 5 - z)
+                      dummy.scale.set(0.7, 0.7, 0.7)
+                      dummy.updateMatrix()
+                      mesh.current.setMatrixAt(id, dummy.matrix)
+                    }
+                mesh.current.instanceMatrix.needsUpdate = true
              }else{
                 particles.forEach((particle, i) => {
                     let { t, factor, speed, xFactor, yFactor, zFactor } = particle
@@ -49,23 +59,23 @@ function Particles({count,played,x}) {
                     const b = Math.sin(t) + Math.cos(t * 2) / 10
                     const s = Math.max(1.5, Math.cos(t) * 5)
                     dummy.position.set(
-                      (particle.mx / 10) * a + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
+                      (particle.mx / 10) * a + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 4,
                       (particle.my / 10) * b + yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
                       (particle.my / 10) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
                     )
-                    dummy.scale.set(s, s, s)
+                    dummy.scale.set(0.7, 0.7, 0.7)
                     dummy.updateMatrix()
                     mesh.current.setMatrixAt(i, dummy.matrix)
                   })
                   mesh.current.instanceMatrix.needsUpdate = true
-             }
+              }
             })
-            let color= played===false? "black": "red"
+            
             return (
               <>
                 <instancedMesh ref={mesh} args={[null, null, count]}>
-                  <sphereBufferGeometry attach="geometry" args={[1, 32, 32]} />
-                  <meshPhongMaterial attach="material" color={color} />
+                  <boxBufferGeometry attach="geometry" args={[0.7, 0.7, 0.7]} />
+                  <meshPhongMaterial attach="material" color={noteColor[note]} />
                 </instancedMesh>
               </>
             )

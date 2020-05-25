@@ -1,15 +1,21 @@
-import React, { Component } from 'react'
+import * as THREE from 'three'
+import React, { Component,Suspense } from 'react'
 
 import {  Canvas} from 'react-three-fiber'
 import Particles from './Particles'
 import {OrbitControls} from 'drei'
 import Tone from 'tone'
+import DiscoBoard from './DiscoBoard'
+import Effect from './Effect'
+
+import BallDrop from './BallDrop'
 
 export default class Zzzaaa extends Component {
     state={
-        test:[[null],[null],[null]],
+        test:[[null],[null],[null],[null],[null],[null],[null],[null],[null],[null],[null],[null],[null]],
         playing:false,
-        toneID:""
+        toneID:"",
+        ballDrop:false
     }
     
     handlePlay=()=>{
@@ -47,27 +53,53 @@ export default class Zzzaaa extends Component {
         }
         
     }
+    handleDrop=()=>{
+
+    }
     render() {
             
     let particlez=[]
-    let x =-50
+    // -50 works for two 
+    //-250 works for 6
+    let x =  -(this.props.sequences.length-1)*100/2
     for (let index = 0; index < this.props.sequences.length; index++) {
-        particlez.push(<Particles key={index} played={this.state.test[index][0]===null?false:true} x={x} count={150}/>)
+        particlez.push(<Particles key={index} note={this.props.notes[index].charAt(0)} played={this.state.test[index][0]===null?false:true} x={x} count={1000}/>)
         x=x+100;
     }
-    let y = <group>{particlez}</group>
+    let y = <group>{[...particlez]}</group>
    
     return(
         
-        <div style={{ position:'absolute', width: '100%', height: '90%' }}>
-         <Canvas camera={{ fov: 75, position: [0, 0, 1000] }}>
-              <ambientLight intensity={1.1} />
-             
+        <div style={{ position:'absolute', width: '100%', height: '100%' }}>
+         <Canvas  gl={{ antialias: false, alpha: false }} camera={{ fov: 75, position: [0, 0, 1000] }} onCreated={({ gl }) => gl.setClearColor('black')}>>
+              
+              
+              {/* <pointLight   position={[100, 100, 100]} intensity={2.2} /> */}
+              {/* <pointLight position={[-100, -100, -100]} intensity={2.2} /> */}
+              <pointLight distance={130} intensity={2.2} color="white" position={[300, 0, 0]} /> 
+              <pointLight distance={130} intensity={2.2} color="white" position={[200, 0, 0]} /> 
+              <pointLight distance={130} intensity={2.2} color="white" position={[100, 0, 0]} /> 
+              <pointLight distance={130} intensity={2.2} color="white" />
+              <pointLight distance={130} intensity={2.2} color="white" position={[-100, 0, 0]} /> 
+              <pointLight distance={130} intensity={2.2} color="white" position={[-200, 0, 0]} /> 
+              <pointLight distance={130} intensity={2.2} color="white" position={[-300, 0, 0]} /> 
+              <pointLight distance={130} intensity={2.2} color="white" position={[0, -100, 0]} /> 
               <OrbitControls />
-              {y}
+              <Suspense fallback={null}>
+                 {y}
+                 
+                 <DiscoBoard hAlign="left" position={[0.5, 18, -100]} handlePlay={this.handlePlay} children="LETS" />
+                 <DiscoBoard hAlign="left" position={[13.7, 0, -100]} handlePlay={this.handlePlay} children="DISCO" />
+                 <DiscoBoard hAlign="left" position={[9, -16, -100]}  handlePlay={this.handlePlay} children="BABY" />
+                 <BallDrop  hAlign="left" position={[-40, -50, -100]} disco={this.state.playing} handleDrop={this.handleDrop} children="DROP" />
+                 <BallDrop hAlign="left" position={[-5, -50, -100]}  disco={this.state.playing} handleDrop={this.handleDrop} children="THE" />
+                 <BallDrop hAlign="left" position={[50, -50, -100]}  disco={this.state.playing} handleDrop={this.handleDrop} children="BALL" />
+                <Effect/>
+               </Suspense>
+              
           </Canvas>
-          <button onClick={this.props.handleDisco}>I'd rather not Disco rn</button>
-          <button onClick={this.handlePlay}>{this.state.playing ? "IT BE PLAYING" : "IT AINT PLAYING"}</button>
+          <button style={{position:'fixed',zIndex:'100' ,bottom:'50px', left:'300px'}} onClick={this.props.handleDisco}>I'd rather not Disco rn</button>
+          <button style={{position:'fixed',zIndex:'100', bottom:'50px'}} onClick={this.handlePlay}>{this.state.playing ? "IT BE PLAYING" : "IT AINT PLAYING"}</button>
         </div>
     )
     }

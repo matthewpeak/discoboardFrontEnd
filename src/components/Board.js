@@ -4,12 +4,13 @@ import Load from './Load'
 import Save from './Save'
 import EditCard from './Edit'
 import AddSeq from './AddSeq'
-
-import VisualizerTest from './VisualizerTest'
+import Draggable from 'react-draggable'
+import { SVG } from 'css.gg'
 import Tone from 'tone'
-import Display from './Display'
+
 
 import Zzzaaa from './Zzzaaa'
+import { Color } from 'three'
 
 export default class Board extends Component {
     constructor() {
@@ -42,7 +43,10 @@ export default class Board extends Component {
         userId:1,
         editSequences:[],
         toneID:null,
-        test:[[null],[null]]
+        test:[[null],[null]],
+        menuSelect:"Add Sequence",
+        menuExpand: false
+        
     }
    
 
@@ -98,7 +102,7 @@ export default class Board extends Component {
     }
     
     loadingButtonClick=()=>{
-        this.state.loadButton===false? this.setState({loadButton:true}):this.setState({loadButton:false})
+      this.setState({menuSelect: "Saved Loops"})
     }
    
 
@@ -166,9 +170,9 @@ export default class Board extends Component {
             }
         })
         //  console.log(newSequences)
-        // console.log(newNotes)
+        console.log(newNotes)
         //  console.log(newSynthTypes)
-        //  console.log(newNotes)
+       
         //  console.log(newSeqIds)
         //  console.log(newSynths)
         this.setState({test:newTests})
@@ -241,15 +245,15 @@ export default class Board extends Component {
     }
 
     saveButtonClick=()=>{
-        this.state.saveButton===false? this.setState({saveButton:true}):this.setState({saveButton:false})
+        this.setState({menuSelect: "Save"})
     }
     
     editSequenceClick=(e,index)=>{
       
       this.state.midiButton===false? this.setState({midiButton:true}):this.setState({midiButton:false})
-     
+      this.setState({editSequences:index})
       
-      this.state.editSequences.includes(index)? this.setState({editSequences:[...this.state.editSequences].filter(i=> i!=index)}): this.setState({editSequences:[...this.state.editSequences,index]})
+      // this.state.editSequences.includes(index)? this.setState({editSequences:[...this.state.editSequences].filter(i=> i!=index)}): this.setState({editSequences:[...this.state.editSequences,index]})
       
     }
 
@@ -349,9 +353,7 @@ export default class Board extends Component {
       this.setState({notes:newNotes})
     }
 
-    addSequenceButton=()=>{
-      this.state.addSequenceButton===false? this.setState({addSequenceButton:true}):this.setState({addSequenceButton:false})
-    }
+   
 
     handleAddSeq(e){
       e.preventDefault()
@@ -381,31 +383,87 @@ export default class Board extends Component {
      this.setState({Sequences:[...this.state.Sequences,newSequence]})
      this.setState({synthTypes:[...this.state.synthTypes,newSynthType]})
      this.setState({synths:[...this.state.synths,newSynth]})
-     this.setState({addSequenceButton:false})
+   
 
+  }
+
+    addSequenceButton=()=>{
+      this.setState({menuSelect:"Add Sequence"})
     }
+
+
     handleDiscoButton=()=>{
       this.state.discoButton===false? this.setState({discoButton:true}):this.setState({discoButton:false})
     }
 
+   handleMenuExpand=()=>{
+    this.state.menuExpand===false? this.setState({menuExpand:true}):this.setState({menuExpand:false})
+   }
+   handleEditClick=()=>{
+    this.setState({menuSelect:"Edit Sequence"})
+   }
+
     render() {
 
      if(this.state.discoButton===false){
-      const displaySequences=this.state.Sequences.map((sequence,index)=><Sequence key={index} currentNote={this.state.test} handleSubtract={this.handleSubtract} note={this.state.notes[index]} handleAdd={this.handleAdd} editSequenceClick={this.editSequenceClick} handleNotePLay={this.handleNotePLay} seqNum={index} noteValues={sequence}/>)
-      const editSequences= this.state.editSequences.map((sequence,index)=><EditCard key={index} editSynth={this.state.synths[sequence]} handleRemoveSequence={this.handleRemoveSequence} handleEdit={this.handleEdit}seqNote={this.state.notes[sequence]} seqSynthType={this.state.synthTypes[sequence]} seqLength={this.state.Sequences[sequence].length} seqNum={sequence}></EditCard>)   
-        return (
-            <Fragment>
+       
+     const displaySequences=this.state.Sequences.map((sequence,index)=><Sequence key={index} currentNote={this.state.test} handleSubtract={this.handleSubtract} note={this.state.notes[index].charAt(0)} handleAdd={this.handleAdd} editSequenceClick={this.editSequenceClick} handleNotePLay={this.handleNotePLay} seqNum={index} noteValues={sequence}/>)
+      // const editSequences= this.state.editSequences.map((sequence,index)=><EditCard key={index} editSynth={this.state.synths[sequence]} handleRemoveSequence={this.handleRemoveSequence} handleEdit={this.handleEdit}seqNote={this.state.notes[sequence]} seqSynthType={this.state.synthTypes[sequence]} seqLength={this.state.Sequences[sequence].length} seqNum={sequence}></EditCard>)   
+      
+      
+      return (
+            <div className="board" style={{height:"100vh", width:"100vw"}}>
+              <div className="sequences">
              {displaySequences}
-             <button onClick={this.handlePlayButton}>{ this.state.playing===false? "false": "true"}</button>
-             <button onClick={this.loadingButtonClick}>Saved Loops</button>
-             {this.state.loadButton===false? null:<Load loadLoop={this.handleLoadLoop}/>}
-             <button onClick={this.saveButtonClick}>Save Loop</button>
-             {this.state.saveButton===false? null : <Save handleSave={this.handleSave}/>}
-             <button onClick={this.addSequenceButton}>Add Sequence</button>
-             {this.state.addSequenceButton===false? null : <AddSeq handleAddSeq={this.handleAddSeq}/>}
-             {editSequences}
-             <button onClick={this.handleDiscoButton}>Lets Disco</button>
-            </Fragment>
+              </div>
+              <Draggable>
+              <div className="controlPanel" onMouseDown={e=>this.handleMouseDown(e)} onMouseUp={e=>this.handleMouseUp(e)} style={{ top:"50px", left:"30px", position: "fixed", width: "350px",border: "1px solid"}}>
+                <div className="menuTop" style={{display:"flex", justifyContent:"space-between",  borderBottom:"1px solid black"}}>
+                <div className="title" >
+                  Let's Disco Baby!
+                </div>
+                <div className="playBtn" style={{ width:"20px", height:"16px" }} onClick={this.handlePlayButton}>
+                { this.state.playing===false? <svg width="20" height="16"viewBox="0 0 24 24"fill="none"xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd"clip-rule="evenodd"d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3ZM5 1C2.79086 1 1 2.79086 1 5V19C1 21.2091 2.79086 23 5 23H19C21.2091 23 23 21.2091 23 19V5C23 2.79086 21.2091 1 19 1H5Z"fill="currentColor"/>  <path d="M16 12L10 16.3301V7.66987L16 12Z" fill="currentColor" /></svg> : <svg width="20" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9H11V15H9V9Z" fill="currentColor" /><path d="M15 15H13V9H15V15Z" fill="currentColor" /><path fill-rule="evenodd" clip-rule="evenodd" d="M1 5C1 2.79086 2.79086 1 5 1H19C21.2091 1 23 2.79086 23 5V19C23 21.2091 21.2091 23 19 23H5C2.79086 23 1 21.2091 1 19V5ZM5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3Z" fill="currentColor"/></svg>}
+                </div>
+                </div>
+                <div className="middle" style={{display:"flex", justifyContent:"space-between"}}>
+                  <div className="menuSelectShow">
+                  {this.state.menuSelect}
+                  </div>
+                <div className="expandWindowBtn" onClick={this.handleMenuExpand} style={{width:"24",height:"24"}}>
+                 {  this.state.menuExpand===false? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.34317 7.75732L4.92896 9.17154L12 16.2426L19.0711 9.17157L17.6569 7.75735L12 13.4142L6.34317 7.75732Z" fill="currentColor"/></svg>:<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.6569 16.2427L19.0711 14.8285L12.0001 7.75739L4.92896 14.8285L6.34317 16.2427L12.0001 10.5858L17.6569 16.2427Z" fill="currentColor"/></svg>}
+                </div>
+                </div>
+                 {this.state.menuExpand===false? null:
+                  <div className="expandMenu" style={{display:'flex',justifyContent:"space-between",borderTop:"1px solid black"}}>
+                    <div className="expandLeft" style={{borderRight:"1px solid black", display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
+                      <div className="addSequenceBtn" onClick={this.addSequenceButton}>
+                        Add Sequence
+                      </div>
+                      <div className="Saved Loops" onClick={this.loadingButtonClick}>
+                        Saved Loops
+                      </div>
+                      <div className="editSequence" onClick={this.handleEditClick}>
+                        Edit Sequence
+                      </div>
+                      <div className="saveSequence"onClick={this.saveButtonClick}>
+                        Save Sequence
+                      </div>
+                    </div>
+                    <div className="expandRight" style={{height:'100%',width:'100%'}} >
+                      {this.state.menuSelect==="Add Sequence"?<AddSeq handleAddSeq={this.handleAddSeq}/>:null}
+                      {this.state.menuSelect==="Save"?<Save handleSave={this.handleSave}/>:null}
+                      {this.state.menuSelect==="Saved Loops"?<Load loadLoop={this.handleLoadLoop}/>:null}
+                      {this.state.menuSelect==="Edit"?<EditCard  editSynth={this.state.synths[this.state.editSequences]} handleRemoveSequence={this.handleRemoveSequence} handleEdit={this.handleEdit}seqNote={this.state.notes[this.state.editSequences]} seqSynthType={this.state.synthTypes[this.state.editSequences]} seqLength={this.state.Sequences[this.state.editSequences].length} seqNum={this.state.editSequences}></EditCard>:null}
+                   
+                    </div>
+                  </div>}
+                  <div className="menuBottom" style={{borderTop:"1px solid black"}}>
+                  <div onClick={this.state.playing===false?this.handleDiscoButton:null} style={{color:this.state.playing===false?"#FF69B4":"black"}}>{this.state.playing===false?"SEE YOU SPACE COWBOY...":"TOUCH ME LATER..."}</div>
+                  </div>
+               </div>
+              </Draggable>   
+             </div>
         )
      }else{
        return(

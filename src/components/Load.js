@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import './form.css'
 export default class load extends Component {
     state={
         songs:[],
@@ -20,8 +20,8 @@ export default class load extends Component {
         
       const showSongs= this.state.songs.map((song,index)=><option key={index} value={song.id}>{song.name}</option>)
         return (
-        <div className="custom-select" >
-            <select value={this.state.value} onChange={e=>this.change(e)}>
+        <div style={{display:'flex',flexDirection:"column", justifyContent:'center', height:'100%',width:'100%', border:'0px'}} >
+            <select className="loadSelect" value={this.state.value} onChange={e=>this.change(e)}>
               <option>select a loop</option>
               {showSongs}
             </select>
