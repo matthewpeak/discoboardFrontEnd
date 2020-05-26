@@ -126,7 +126,9 @@ export default class Board extends Component {
         })
        
         newSequences.sort((s1,s2)=>s1[2]-s2[2])
-      
+        
+        newSequences.forEach(s=> newSynthTypes.push(s.pop()))
+
         newSequences.forEach(s=>extractionOfIdNotes.push(s.splice(0,4)))
 
         extractionOfIdNotes.forEach(s=>{
@@ -143,38 +145,22 @@ export default class Board extends Component {
        
        
 
-        let newSynths=await fetch("http://localhost:3000/synths")
-        .then(res=>res.json())
-        .then(data=> data.filter(s => newSeqIds.includes(s.sequence_id)))
-        .then(newData=>{
-           return newData.map(s=> Object.values(s))
-        })
-        
-        
-        newSynths.sort((synthA,synthB)=> synthA[1]-synthB[1])
-       
-
-       newSynths= newSynths.map(synth=>{
-            if(synth[2]==="default"){
-               newSynthTypes.push("default")
+      let newSynths= newSynthTypes.map(synth=>{
+            if(synth==="default"){
                return new Tone.Synth().toMaster()
-            }else if(synth[2]==="fm"){
-              newSynthTypes.push("fm")
+            }else if(synth==="fm"){
               return new Tone.FMSynth().toMaster()
-            }else if(synth[2]==="am"){
-              newSynthTypes.push("am")
+            }else if(synth==="am"){
               return new Tone.AMSynth().toMaster()
-            }else if(synth[2]==="mem"){
-              newSynthTypes.push("mem")
+            }else if(synth==="mem"){
               return new Tone.MembraneSynth().toMaster()
             }
         })
-        //  console.log(newSequences)
-        console.log(newNotes)
-        //  console.log(newSynthTypes)
+        
+     
        
-        //  console.log(newSeqIds)
-        //  console.log(newSynths)
+        console.log(newNotes)
+        
         this.setState({test:newTests})
         this.setState({synthTypes:newSynthTypes})
         this.setState({notes:newNotes})
@@ -201,7 +187,7 @@ export default class Board extends Component {
     .then(res=>res.json())
     .then(data=> Object.values(data)[0])
     
-    let sequenceIds= await Promise.all(this.state.Sequences.map( async(sequence,index)=>{
+    await Promise.all(this.state.Sequences.map( async(sequence,index)=>{
     return await  fetch("http://localhost:3000/sequences",{
       method:"POST",
       headers:{
@@ -218,31 +204,17 @@ export default class Board extends Component {
         note5: sequence[4],
         note6: sequence[5],
         note7: sequence[6],
-        note8: sequence[7]
+        note8: sequence[7],
+        synth: this.state.synthTypes[index]
       })
     })
     .then(res=>res.json())
     .then(data=> {return Object.values(data)})}))
 
    
-    sequenceIds.sort((seq1,seq2)=>seq1[2]-seq2[2])
+ }
     
-    
-   let whatever = await Promise.all(sequenceIds.map( async(id,index)=>{
-    return await  fetch("http://localhost:3000/synths",{
-      method:"POST",
-      headers:{
-        'content-type':'application/json',
-        Accept:'application/json'
-      },body:JSON.stringify({
-        sequence_id: id[0],
-        kind: this.state.synthTypes[index]
-      })
-    })
-    .then(res=>res.json())
-    .then(data=> console.log(data))}))
-    this.setState({saveButton:false})
-    }
+   
 
     saveButtonClick=()=>{
         this.setState({menuSelect: "Save"})
@@ -420,7 +392,7 @@ export default class Board extends Component {
     render() {
 
      if(this.state.discoButton===false){
-       console.log(this.state.synths)
+       
      
      const displaySequences=this.state.Sequences.map((sequence,index)=><Sequence key={index} currentNote={this.state.test} handleSubtract={this.handleSubtract} handleAdd={this.handleAdd} editSequenceClick={this.editSequenceClick} handleNotePLay={this.handleNotePLay} seqNum={index} note={this.state.notes[index].charAt(0)} noteValues={sequence}/>)
       const editSequence=this.state.editSequences===null?"select a sequence to edit":<EditCard handleEditSynth={this.handleEditSynth} editSynth={this.state.synths[this.state.editSequences]} handleRemoveSequence={this.handleRemoveSequence} handleEdit={this.handleEdit}seqNote={this.state.notes[this.state.editSequences]} seqSynthType={this.state.synthTypes[this.state.editSequences]} seqLength={this.state.Sequences[this.state.editSequences].length} seqNum={this.state.editSequences}></EditCard>
