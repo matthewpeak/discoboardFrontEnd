@@ -5,8 +5,8 @@ export default class EditCard extends Component {
         note: this.props.seqNote.charAt(0),
         octave: this.props.seqNote.charAt(1),
         synth:this.props.seqSynthType,
-        length:this.props.seqLength
-        
+        length:this.props.seqLength,
+        display:"sequence"
     }
     
 
@@ -22,8 +22,13 @@ export default class EditCard extends Component {
           [name]: value
         });
       }
+
+      handleDisplayChange=()=>{
+         this.state.display==="sequence"? this.setState({display:"envelope"}):this.setState({display:"sequence"})
+      }
     
       render() {
+      if(this.state.display==="sequence"){
         return (
             <div>
             <form onSubmit={e=> this.props.handleEdit(e,this.props.seqNum)}>
@@ -80,16 +85,19 @@ export default class EditCard extends Component {
              </select>
             </label>
             <input type="submit" value="EDIT SEQUENCE" />
-             </form>
-             <Envelope value={this.props.seqNum} editSynth={this.props.editSynth}/>
+            </form>
+            <button onClick={this.handleDisplayChange}> Synth Envelope </button>
              <button onClick={()=>this.props.handleRemoveSequence(this.props.seqNum)}>DELETE SEQUENCE</button>
-            </div>
-           
-                
-           
-            
-        )
+             </div>
+        )} else{
+           return(
+           <div>
+             <Envelope value={this.props.seqNum} seqNum={this.props.seqNum} handleEditSynth={this.props.handleEditSynth} editSynth={this.props.editSynth}/>
+             <button onClick={this.handleDisplayChange}> Synth Envelope </button>
+          </div>
+         )
+        } 
     }
-      }
+}
 
 

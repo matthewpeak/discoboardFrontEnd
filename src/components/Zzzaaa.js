@@ -98,7 +98,7 @@ export default class Zzzaaa extends Component {
                </Suspense>
               
           </Canvas>
-          <button style={{position:'fixed',zIndex:'100' ,bottom:'50px', left:'300px'}} onClick={this.props.handleDisco}>I'd rather not Disco rn</button>
+          <button style={{position:'fixed',zIndex:'100' ,bottom:'50px', left:'300px'}} onClick={this.props.handleDisco}>There Is Always Tomorrow Baby</button>
           <button style={{position:'fixed',zIndex:'100', bottom:'50px'}} onClick={this.handlePlay}>{this.state.playing ? "IT BE PLAYING" : "IT AINT PLAYING"}</button>
         </div>
     )

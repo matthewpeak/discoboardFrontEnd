@@ -1,8 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './fonts/NeueMontreal-Regular.otf'
+import './fonts/Stellar-Regular.otf'
+import  './fonts/Agrandir-WideBlackItalic.otf'
+import  './fonts/Agrandir-TightBlack.otf'
+import  './fonts/Grafier-Black.otf'
+import  './fonts/Grafier-BlackDisplay.otf'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
 
 ReactDOM.render(
   <React.StrictMode>

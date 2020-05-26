@@ -7,7 +7,7 @@ export default class Envelope extends Component {
         sustain:this.props.editSynth.envelope.sustain,
         release:this.props.editSynth.envelope.release,
     }
-    handleInputChange(event) {
+    handleChange=(event)=> {
         const target = event.target;
         const value = target.value ;
         const name = target.name;
@@ -17,19 +17,20 @@ export default class Envelope extends Component {
         });
       }
     render() {
-        console.log(this.props.editSynth)
-        console.log(this.state.attack)
+      
         return (
             <div>
-                Attack Slider
-                 <input type="range" min="0.00" max="2.00" step=".01" value={this.state.attack} onChange={this.onChange} name="attack"></input>
-                 Decay Slider
-                 <input type="range" min="0.00" max="2.00" step=".01" value={this.state.attack} onChange={this.onChange} name="decay"></input>
-                 Release Slider
-                 <input type="range" min="0.00" max="1.00" step=".01" value={this.state.attack} onChange={this.onChange} name="sustain"></input>
-                 Sustain Slider
-                 <input type="range" min="0.00" max="4.00" step=".01" value={this.state.attack} onChange={this.onChange} name="release"></input>
+                 Attack 
+                 <input type="range" min="0.00" max="2.00" step=".01" value={this.state.attack} onChange={e=>this.handleChange(e)} name="attack"></input>
+                 Decay 
+                 <input type="range" min="0.00" max="2.00" step=".01" value={this.state.decay} onChange={e=>this.handleChange(e)} name="decay"></input>
+                 Release 
+                 <input type="range" min="0.00" max="1.00" step=".01" value={this.state.release} onChange={e=>this.handleChange(e)} name="release"></input>
+                 Sustain 
+                 <input type="range" min="0.00" max="4.00" step=".01" value={this.state.sustain} onChange={e=>this.handleChange(e)} name="sustain"></input>
+                 <button onClick={e=>this.props.handleEditSynth(e,this.state.attack,this.state.decay,this.state.release,this.state.sustain,this.props.seqNum)}>Edit Synth</button>
             </div>
+        
         )
     }
 }

@@ -17,10 +17,10 @@ export default class load extends Component {
         
     }
     render() {
-        
+     
       const showSongs= this.state.songs.map((song,index)=><option key={index} value={song.id}>{song.name}</option>)
         return (
-        <div style={{display:'flex',flexDirection:"column", justifyContent:'center', height:'100%',width:'100%', border:'0px'}} >
+        <div style={{display:'flex',flexDirection:"column", justifyContent:'center', height:'100%',width:'100%'}} >
             <select className="loadSelect" value={this.state.value} onChange={e=>this.change(e)}>
               <option>select a loop</option>
               {showSongs}
