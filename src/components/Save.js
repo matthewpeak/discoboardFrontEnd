@@ -10,8 +10,8 @@ export default class Save extends Component {
     
       render() {
         return (
-          <form onSubmit={e=>this.props.handleSave(e,this.state.name)}>
-            <label>
+          <form style={{paddingTop:'30px'}} onSubmit={e=>this.props.handleSave(e,this.state.name)}>
+            <label >
               Name:
               <input type="text" value={this.state.name} onChange={this.handleChange} />
             </label>

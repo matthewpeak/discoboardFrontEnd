@@ -8,7 +8,7 @@ import Tone from 'tone'
 import DiscoBoard from './DiscoBoard'
 import Effect from './Effect'
 
-import BallDrop from './BallDrop'
+
 
 export default class Zzzaaa extends Component {
     state={
@@ -91,9 +91,6 @@ export default class Zzzaaa extends Component {
                  <DiscoBoard hAlign="left" position={[0.5, 18, -100]} handlePlay={this.handlePlay} children="LETS" />
                  <DiscoBoard hAlign="left" position={[13.7, 0, -100]} handlePlay={this.handlePlay} children="DISCO" />
                  <DiscoBoard hAlign="left" position={[9, -16, -100]}  handlePlay={this.handlePlay} children="BABY" />
-                 <BallDrop  hAlign="left" position={[-40, -50, -100]} disco={this.state.playing} handleDrop={this.handleDrop} children="DROP" />
-                 <BallDrop hAlign="left" position={[-5, -50, -100]}  disco={this.state.playing} handleDrop={this.handleDrop} children="THE" />
-                 <BallDrop hAlign="left" position={[50, -50, -100]}  disco={this.state.playing} handleDrop={this.handleDrop} children="BALL" />
                 <Effect/>
                </Suspense>
               

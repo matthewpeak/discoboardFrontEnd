@@ -3,10 +3,10 @@ import './form.css'
 
 export default class AddSeq extends Component {
     state={
-        note:"",
-        octave:"",
-        synth:"",
-        length:""
+        note:"A",
+        octave:"0",
+        synth:"default",
+        length:"8"
         
     }
     
@@ -31,7 +31,7 @@ export default class AddSeq extends Component {
             <label className='label'>
               Note
               </label>
-            <select className="select"  onChange={e=>this.handleInputChange(e)} name="note">
+            <select className="select" value={this.state.note}  onChange={e=>this.handleInputChange(e)} name="note">
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
@@ -45,7 +45,7 @@ export default class AddSeq extends Component {
             <label className='label'>
              Octave
              </label>
-             <select className="select" onChange={e=>this.handleInputChange(e)} name="octave">
+             <select className="select" value={this.state.octave} onChange={e=>this.handleInputChange(e)} name="octave">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -61,7 +61,7 @@ export default class AddSeq extends Component {
             <label className='label'>
              Synth
              </label>
-             <select className="select" onChange={e=>this.handleInputChange(e)} name="synth">
+             <select className="select" value={this.state.synth} onChange={e=>this.handleInputChange(e)} name="synth">
                 <option value="default">Default</option>
                 <option value="fm">FM</option>
                 <option value="am">AM</option>
@@ -72,7 +72,7 @@ export default class AddSeq extends Component {
             <label className='label'>
              Length
              </label>
-             <select className="select" onChange={e=>this.handleInputChange(e)} name="length">
+             <select className="select" value={this.state.length} onChange={this.props.playing===false?e=>this.handleInputChange(e):null} name="length">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -88,7 +88,7 @@ export default class AddSeq extends Component {
              </select>
              </div>
            
-            <input className='submit' type="submit" value="save" />
+            <input className='submit' type="submit" value={this.props.playing===false?"Add Sequence":"Pause Music to Add"} />
           </form>
             
         )

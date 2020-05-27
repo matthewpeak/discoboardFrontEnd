@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Envelope from './Envelope'
+import './form.css'
 export default class EditCard extends Component {
     state={
         note: this.props.seqNote.charAt(0),
@@ -30,11 +31,13 @@ export default class EditCard extends Component {
       render() {
       if(this.state.display==="sequence"){
         return (
-            <div>
+            <div style={{ height:'100%',width:'100%', border:'0px', display:'flex',flexDirection:'column', justifyContent:'space-around'}}>
             <form onSubmit={e=> this.props.handleEdit(e,this.props.seqNum)}>
-            <label>
+            <div style={{  border:'0px', justifyContent:'space-between', display:'flex'}}>
+            <label className="label">
              Note
-             <select id="selectNotes" value={this.state.note} onChange={e=>this.handleInputChange(e)} name="note">
+             </label>
+             <select className="select" value={this.state.note} onChange={e=>this.handleInputChange(e)} name="note">
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
@@ -42,10 +45,12 @@ export default class EditCard extends Component {
                 <option value="E">E</option>
                 <option value="F">G</option>
              </select>
-            </label>
-            <label>
+             </div>
+             <div style={{  border:'0px', justifyContent:'space-between', display:'flex'}}>
+            <label className="label">
              Octave
-             <select id="selectOctaves" value={this.state.octave} onChange={e=>this.handleInputChange(e)} name="octave">
+             </label>
+             <select className="select"  value={this.state.octave} onChange={e=>this.handleInputChange(e)} name="octave">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -56,20 +61,23 @@ export default class EditCard extends Component {
                 <option value="7">7</option>
                 <option value="8">8</option>
              </select>
-             
-            </label>
-            <label>
+             </div>
+             <div style={{  border:'0px', justifyContent:'space-between', display:'flex'}}>
+            <label className="label">
              synth
-             <select id="selectNotes" value={this.state.synth} onChange={e=>this.handleInputChange(e)} name="synth">
+             </label>
+             <select className="select"  value={this.state.synth} onChange={e=>this.handleInputChange(e)} name="synth">
                 <option value="default">Default</option>
                 <option value="fm">FM</option>
                 <option value="am">AM</option>
                 <option value="mem">Membrane</option>
              </select>
-            </label>
-            <label>
+           </div>
+           <div style={{  border:'0px', justifyContent:'space-between', display:'flex'}}>
+            <label className="label">
              length
-             <select id="selectLength" value={this.state.length} onChange={e=>this.handleInputChange(e)} name="length">
+             </label>
+             <select className="select"  value={this.state.length} onChange={e=>this.handleInputChange(e)} name="length">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -83,18 +91,22 @@ export default class EditCard extends Component {
                 <option value="11">11</option>
                 <option value="12">12</option>
              </select>
-            </label>
-            <input type="submit" value="EDIT SEQUENCE" />
+            </div>
+            <div style={{paddingTop:'8px'}}>
+            <input  type="submit" value="Save Edit" />
+            </div>
             </form>
+            <div style={{width:"100%",borderLeft:"1px solid black"}}>
             <button onClick={this.handleDisplayChange}> Synth Envelope </button>
              <button onClick={()=>this.props.handleRemoveSequence(this.props.seqNum)}>DELETE SEQUENCE</button>
              </div>
+             </div>
         )} else{
            return(
-           <div>
+            <div >
              <Envelope value={this.props.seqNum} seqNum={this.props.seqNum} handleEditSynth={this.props.handleEditSynth} editSynth={this.props.editSynth}/>
              <button onClick={this.handleDisplayChange}> Synth Envelope </button>
-          </div>
+           </div>
          )
         } 
     }

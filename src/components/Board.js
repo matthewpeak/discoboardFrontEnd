@@ -5,7 +5,6 @@ import Save from './Save'
 import EditCard from './Edit'
 import AddSeq from './AddSeq'
 import Draggable from 'react-draggable'
-import Envelope from './Envelope'
 import Tone from 'tone'
 
 
@@ -38,8 +37,6 @@ export default class Board extends Component {
         midiButton:false,
         addSequenceButton:false,
         discoButton:false,
-        sequenceIds:[],
-        songId:[],
         userId:1,
         editSequences:null,
         toneID:null,
@@ -59,7 +56,7 @@ export default class Board extends Component {
             let    PlayNotes     = [...this.state.notes]
             let    PlaySequences = [...this.state.Sequences]
             let    newTest       = [...this.state.test]
-            var draw=0
+            
             let repeat=(time)=> {
                 let step = index % 8;
                 for (let i = 0; i < PlaySequences.length; i++) {
@@ -160,13 +157,17 @@ export default class Board extends Component {
      
        
         console.log(newNotes)
+        console.log(newSynthTypes)
+        console.log(newTests)
+        console.log(newSynths)
+        console.log(newSequences)
         
         this.setState({test:newTests})
         this.setState({synthTypes:newSynthTypes})
         this.setState({notes:newNotes})
         this.setState({Sequences:newSequences}) 
         this.setState({synths:newSynths})
-        this.setState({sequenceIds:newSeqIds})    
+        // this.setState({sequenceIds:newSeqIds})    
     }
 
  async  handleSave(e,name){
@@ -222,10 +223,10 @@ export default class Board extends Component {
     
     editSequenceClick=(e,index)=>{
       console.log(index)
-      // this.state.midiButton===false? this.setState({midiButton:true}):this.setState({midiButton:false})
+    
       this.setState({editSequences:index})
       
-      // this.state.editSequences.includes(index)? this.setState({editSequences:[...this.state.editSequences].filter(i=> i!=index)}): this.setState({editSequences:[...this.state.editSequences,index]})
+      
       
     }
 
@@ -392,7 +393,7 @@ export default class Board extends Component {
     render() {
 
      if(this.state.discoButton===false){
-       
+       console.log(this.state.test)
      
      const displaySequences=this.state.Sequences.map((sequence,index)=><Sequence key={index} currentNote={this.state.test} handleSubtract={this.handleSubtract} handleAdd={this.handleAdd} editSequenceClick={this.editSequenceClick} handleNotePLay={this.handleNotePLay} seqNum={index} note={this.state.notes[index].charAt(0)} noteValues={sequence}/>)
       const editSequence=this.state.editSequences===null?"select a sequence to edit":<EditCard handleEditSynth={this.handleEditSynth} editSynth={this.state.synths[this.state.editSequences]} handleRemoveSequence={this.handleRemoveSequence} handleEdit={this.handleEdit}seqNote={this.state.notes[this.state.editSequences]} seqSynthType={this.state.synthTypes[this.state.editSequences]} seqLength={this.state.Sequences[this.state.editSequences].length} seqNum={this.state.editSequences}></EditCard>
@@ -438,9 +439,9 @@ export default class Board extends Component {
                       </div>
                     </div>
                     <div className="expandRight" style={{height:'100%',width:'100%'}} >
-                      {this.state.menuSelect==="Add Sequence"?<AddSeq handleAddSeq={this.handleAddSeq}/>:null}
+                      {this.state.menuSelect==="Add Sequence"?<AddSeq playing={this.state.playing} handleAddSeq={this.handleAddSeq}/>:null}
                       {this.state.menuSelect==="Save"?<Save handleSave={this.handleSave}/>:null}
-                      {this.state.menuSelect==="Saved Loops"?<Load loadLoop={this.handleLoadLoop}/>:null}
+                      {this.state.menuSelect==="Saved Loops"?<Load playing={this.state.playing} loadLoop={this.handleLoadLoop}/>:null}
                       {this.state.menuSelect==="Edit"?editSequence:null}
                    
                     </div>

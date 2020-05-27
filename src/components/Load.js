@@ -3,7 +3,7 @@ import './form.css'
 export default class load extends Component {
     state={
         songs:[],
-        value:"lalala"
+        value:""
     }
     componentDidMount(){
 
@@ -22,10 +22,10 @@ export default class load extends Component {
         return (
         <div style={{display:'flex',flexDirection:"column", justifyContent:'center', height:'100%',width:'100%'}} >
             <select className="loadSelect" value={this.state.value} onChange={e=>this.change(e)}>
-              <option>select a loop</option>
+            <option value={null}>Select Loop</option>
               {showSongs}
             </select>
-            <button onClick={()=>this.props.loadLoop(this.state.value)}>Load Loop</button>
+            <button onClick={this.props.playing===false?()=>this.props.loadLoop(this.state.value):null}>{this.props.playing===false?"Load Loop":"Pause Music To Load"}</button>
           </div>
         )
     }
