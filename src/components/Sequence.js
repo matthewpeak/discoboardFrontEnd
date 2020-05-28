@@ -9,10 +9,10 @@ export default class Sequence extends Component {
    
    
     render() {
-    
+        
         var z=-12
         let showNotes=[]
-        console.log(this.props.seqNum)
+        
         for(let index=0;index<this.props.noteValues.length;index++){
           
           if(this.props.currentNote[this.props.seqNum][0]===index){

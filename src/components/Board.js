@@ -421,9 +421,9 @@ export default class Board extends Component {
       return (
             <div className="board" style={{height:"100vh", width:"100vw"}}>
               <div className="sequences">
-             {displaySequences}
+                {displaySequences}
               </div>
-              <Menu handlePlayButton={this.handlePlayButton}  playing={this.state.playing} handleAddSeq={this.handleAddSeq} handleSave={this.handleSave} handleLoadLoop={this.handleLoadLoop} handleEditSynth={this.handleEditSynth} synths={this.state.synths} handleDiscoButton={this.handleDiscoButton} synthTypes={this.state.synthTypes} Sequences={this.state.Sequences} handleRemoveSequence={this.handleRemoveSequence} handleEdit={this.handleEdit} editSequences={this.state.editSequences} notes={this.state.notes}/>
+                <Menu handlePlayButton={this.handlePlayButton}  playing={this.state.playing} handleAddSeq={this.handleAddSeq} handleSave={this.handleSave} handleLoadLoop={this.handleLoadLoop} handleEditSynth={this.handleEditSynth} synths={this.state.synths} handleDiscoButton={this.handleDiscoButton} synthTypes={this.state.synthTypes} Sequences={this.state.Sequences} handleRemoveSequence={this.handleRemoveSequence} handleEdit={this.handleEdit} editSequences={this.state.editSequences} notes={this.state.notes}/>
              </div>
         )
      }else{

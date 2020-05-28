@@ -14,6 +14,9 @@ function Note(props) {
     "G":"#F5D300"
   }
  
+  console.log(props.note)
+ console.log(noteColor[props.note])
+
   const [hovered, setHover] = useState(false)
   // const [active, setActive] = useState(false)
 
