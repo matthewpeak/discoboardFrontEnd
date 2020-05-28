@@ -11,7 +11,7 @@ function Particles({note,count,played,x}) {
             var zex=x
             const noteColor={
               "A":"#08F7fe",
-              "B":"#21ff25",
+              "B":"#21ff25", 
               "C":"#7122fa",
               "D":"#FF3300",
               "E":"#ff2079",
@@ -19,7 +19,7 @@ function Particles({note,count,played,x}) {
               "G":"#F5D300"
             }
 
-
+           
 
             const particles = useMemo(() => {
               const temp = []

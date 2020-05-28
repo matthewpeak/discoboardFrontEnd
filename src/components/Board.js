@@ -23,7 +23,7 @@ export default class Board extends Component {
         synthTypes:["default","fm"],
         synths:[new Tone.Synth().toMaster(),new Tone.FMSynth().toMaster()],
         Sequences:[[false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false]],
-        notes:["G5","E4"],
+        notes:["B5","E4"],
         playing:false,
         playID:null,
         loadButton:false,

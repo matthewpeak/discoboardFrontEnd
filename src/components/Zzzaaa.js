@@ -59,8 +59,7 @@ export default class Zzzaaa extends Component {
     render() {
             
     let particlez=[]
-    // -50 works for two 
-    //-250 works for 6
+   
     let x =  -(this.props.Sequences.length-1)*100/2
     for (let index = 0; index < this.props.Sequences.length; index++) {
         particlez.push(<Particles key={index} note={this.props.notes[index].charAt(0)} played={this.state.test[index][0]===null?false:true} x={x} count={1000}/>)
@@ -74,8 +73,7 @@ export default class Zzzaaa extends Component {
          <Canvas  gl={{ antialias: false, alpha: false }} camera={{ fov: 75, position: [0, 0, 100] }} onCreated={({ gl }) => gl.setClearColor('black')}>>
               
               
-              {/* <pointLight   position={[100, 100, 100]} intensity={2.2} /> */}
-              {/* <pointLight position={[-100, -100, -100]} intensity={2.2} /> */}
+             
               <pointLight distance={130} intensity={2.2} color="white" position={[300, 0, 0]} /> 
               <pointLight distance={130} intensity={2.2} color="white" position={[200, 0, 0]} /> 
               <pointLight distance={130} intensity={2.2} color="white" position={[100, 0, 0]} /> 

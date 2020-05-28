@@ -26,7 +26,7 @@ export default class AddSeq extends Component {
     render() {
         return (
             //display:'flex',flexDirection:'column'
-            <form  style={{ height:'100%',width:'100%', border:'0px', display:'flex',flexDirection:'column', justifyContent:'space-around'}}onSubmit={e=> this.props.handleAddSeq(e)}>
+            <form  style={{ height:'100%',width:'100%', border:'0px', display:'flex',flexDirection:'column', justifyContent:'space-around'}}onSubmit={this.props.playing===false?e=> this.props.handleAddSeq(e):e=> e.preventDefault()}>
             <div style={{  border:'0px', justifyContent:'space-between', display:'flex'}}>
             <label className='label'>
               Note

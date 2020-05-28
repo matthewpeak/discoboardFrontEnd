@@ -56,16 +56,16 @@ export default class Menu extends Component {
                 </div>
                  {this.state.menuExpand===false? null: <div className="expandMenu" style={{display:'flex',justifyContent:"space-between",borderTop:"1px solid black"}}>
                     <div className="expandLeft" style={{ borderRight: this.state.menuSelect!=="Edit"?"1px solid black":"none", height:'100%',width:'100%', display:'flex',flexDirection:'column',justifyContent:'space-around',paddingTop:'20px',paddingBottom:'20px'}}>
-                      <div className="addSequenceBtn" onClick={this.addSequenceButton}>
+                      <div className="addSequenceBtn" style={{cursor: "pointer"}} onClick={this.addSequenceButton}>
                         Add Sequence
                       </div>
-                      <div className="Saved Loops" onClick={this.loadingButtonClick}>
+                      <div className="Saved Loops" style={{cursor: "pointer"}}  onClick={this.loadingButtonClick}>
                         Saved Loops
                       </div>
-                      <div className="editSequence" onClick={this.handleEditClick}>
+                      <div className="editSequence" style={{cursor: "pointer"}}  onClick={this.handleEditClick}>
                         Edit Sequence
                       </div>
-                      <div className="saveSequence"onClick={this.saveButtonClick}>
+                      <div className="saveSequence" style={{cursor: "pointer"}}  onClick={this.saveButtonClick}>
                         Save Loop
                       </div>
                     </div>
