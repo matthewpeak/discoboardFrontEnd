@@ -31,12 +31,13 @@ export default class Menu extends Component {
         this.setState({menuSelect: "Saved Loops"})
       }
     render() {
+      const nodeRef = React.createRef(null);
        const {handlePlayButton,playing,handleAddSeq,handleSave,handleLoadLoop,handleEditSynth,synths,handleDiscoButton,Sequences,editSequences,handleRemoveSequence,handleEdit,notes,synthTypes}=this.props
        console.log(Sequences.length)
        let edit=editSequences===null?"Select A Sequence To Edit": <EditCard handleEditSynth={handleEditSynth} editSynth={synths[editSequences]} handleRemoveSequence={handleRemoveSequence} handleEdit={handleEdit}seqNote={notes[editSequences]} seqSynthType={synthTypes[editSequences]} seqLength={Sequences[editSequences].length} seqNum={editSequences}></EditCard>
         return (
-           <Draggable>
-                 <div className="controlPanel" style={{ top:"50px", left:"30px", position: "fixed", width: "350px",border: "1px solid", fontFamily: "Stellar"}}>
+           <Draggable nodeRef={nodeRef}>
+                 <div className="controlPanel" ref={nodeRef} style={{ top:"50px", left:"30px", position: "fixed", width: "350px",border: "1px solid", fontFamily: "Stellar"}}>
                 <div className="menuTop" style={{display:"flex", justifyContent:"space-between", padding:'4px',  borderBottom:"1px solid black"}}>
                 <div className="title" style={{fontFamily:"GrafierDisplay"}} >
                   Let's Disco Baby!
