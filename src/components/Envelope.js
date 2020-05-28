@@ -19,7 +19,7 @@ export default class Envelope extends Component {
     render() {
       
         return (
-            <div>
+            <div style={{height:"100%",display:"flex",flexDirection:"column",borderLeft:"1px solid"}}>
                  Attack 
                  <input type="range" min="0.00" max="2.00" step=".01" value={this.state.attack} onChange={e=>this.handleChange(e)} name="attack"></input>
                  Decay 
@@ -29,6 +29,7 @@ export default class Envelope extends Component {
                  Sustain 
                  <input type="range" min="0.00" max="4.00" step=".01" value={this.state.sustain} onChange={e=>this.handleChange(e)} name="sustain"></input>
                  <button onClick={e=>this.props.handleEditSynth(e,this.state.attack,this.state.decay,this.state.release,this.state.sustain,this.props.seqNum)}>Edit Synth</button>
+                 <button onClick={this.props.handleDisplayChange}> Back To Sequence </button>
             </div>
         
         )

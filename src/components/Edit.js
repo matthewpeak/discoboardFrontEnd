@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Envelope from './Envelope'
 import './form.css'
+import { Color } from 'three';
 export default class EditCard extends Component {
     state={
         note: this.props.seqNote.charAt(0),
@@ -31,7 +32,7 @@ export default class EditCard extends Component {
       render() {
       if(this.state.display==="sequence"){
         return (
-            <div style={{ height:'100%',width:'100%', border:'0px', display:'flex',flexDirection:'column', justifyContent:'space-around'}}>
+            <div style={{ height:'100%',width:'100%', borderLeft:"1px solid black", display:'flex',flexDirection:'column', justifyContent:'space-around'}}>
             <form onSubmit={e=> this.props.handleEdit(e,this.props.seqNum)}>
             <div style={{  border:'0px', justifyContent:'space-between', display:'flex'}}>
             <label className="label">
@@ -64,7 +65,7 @@ export default class EditCard extends Component {
              </div>
              <div style={{  border:'0px', justifyContent:'space-between', display:'flex'}}>
             <label className="label">
-             synth
+             Synth
              </label>
              <select className="select"  value={this.state.synth} onChange={e=>this.handleInputChange(e)} name="synth">
                 <option value="default">Default</option>
@@ -75,7 +76,7 @@ export default class EditCard extends Component {
            </div>
            <div style={{  border:'0px', justifyContent:'space-between', display:'flex'}}>
             <label className="label">
-             length
+             Length
              </label>
              <select className="select"  value={this.state.length} onChange={e=>this.handleInputChange(e)} name="length">
                 <option value="1">1</option>
@@ -94,18 +95,20 @@ export default class EditCard extends Component {
             </div>
             <div style={{paddingTop:'8px'}}>
             <input  type="submit" value="Save Edit" />
+            <button onClick={this.handleDisplayChange}> Synth Envelope </button>
+             <button style ={{color:"red"}}onClick={()=>this.props.handleRemoveSequence(this.props.seqNum)}>DELETE SEQUENCE</button>
             </div>
             </form>
-            <div style={{width:"100%",borderLeft:"1px solid black"}}>
+            {/* <div style={{width:"100%",borderLeft:"1px solid black"}}>
             <button onClick={this.handleDisplayChange}> Synth Envelope </button>
-             <button onClick={()=>this.props.handleRemoveSequence(this.props.seqNum)}>DELETE SEQUENCE</button>
-             </div>
+             <button style ={{color:"red"}}onClick={()=>this.props.handleRemoveSequence(this.props.seqNum)}>DELETE SEQUENCE</button>
+             </div> */}
              </div>
         )} else{
            return(
             <div >
-             <Envelope value={this.props.seqNum} seqNum={this.props.seqNum} handleEditSynth={this.props.handleEditSynth} editSynth={this.props.editSynth}/>
-             <button onClick={this.handleDisplayChange}> Synth Envelope </button>
+             <Envelope value={this.props.seqNum} handleDisplayChange={this.handleDisplayChange} seqNum={this.props.seqNum} handleEditSynth={this.props.handleEditSynth} editSynth={this.props.editSynth}/>
+             {/* <button onClick={this.handleDisplayChange}> Back To Sequence </button> */}
            </div>
          )
         } 
