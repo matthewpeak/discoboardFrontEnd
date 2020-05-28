@@ -2,8 +2,8 @@ import * as THREE from 'three'
 import React, { useMemo,useState } from 'react'
 import { useLoader, useUpdate } from 'react-three-fiber'
 
-export default function({ handlePlay,children, vAlign = 'center', hAlign = 'center', size = 3, ...props }) {
-  const font = useLoader(THREE.FontLoader, '/bold.blob')
+export default function({ playing, handlePlay,children, vAlign = 'center', hAlign = 'center', size = 3, ...props }) {
+  const font = useLoader(THREE.FontLoader, '/grafierBlackDisplayTest.json')
   // clicked?[2 * size, 2 * size, 0.1]:
   const config = useMemo(
     () => ({ font, size: 40, height: 30, curveSegments: 15, bevelEnabled: true, bevelThickness: 2, bevelSize: 1.5, bevelOffset: 0, bevelSegments: 2 }),
@@ -26,7 +26,7 @@ export default function({ handlePlay,children, vAlign = 'center', hAlign = 'cent
       <mesh ref={mesh}    onClick={handlePlay}>
        
         <textGeometry attach="geometry" args={[children, config]} />
-        <meshStandardMaterial attach="material" color="red" />
+        <meshStandardMaterial attach="material" color={playing===false?"red":"white"} />
       </mesh>
     </group>
   )

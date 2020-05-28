@@ -88,9 +88,9 @@ export default class Zzzaaa extends Component {
               <Suspense fallback={null}>
                  {y}
                  
-                 <DiscoBoard hAlign="left" position={[0.5, 18, -100]} handlePlay={this.handlePlay} children="LETS" />
-                 <DiscoBoard hAlign="left" position={[13.7, 0, -100]} handlePlay={this.handlePlay} children="DISCO" />
-                 <DiscoBoard hAlign="left" position={[9, -16, -100]}  handlePlay={this.handlePlay} children="BABY" />
+                 <DiscoBoard hAlign="left" position={[10.5, 18, -100]} playing={this.state.playing} handlePlay={this.handlePlay} children="LET'S" />
+                 <DiscoBoard hAlign="left" position={[21, -1, -100]} playing={this.state.playing} handlePlay={this.handlePlay} children="DISCO" />
+                 <DiscoBoard hAlign="left" position={[19, -20, -100]} playing={this.state.playing} handlePlay={this.handlePlay} children="BABY!" />
                 <Effect/>
                </Suspense>
               
