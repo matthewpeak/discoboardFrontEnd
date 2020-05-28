@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Envelope from './Envelope'
 import './form.css'
-import { Color } from 'three';
 export default class EditCard extends Component {
     state={
         note: this.props.seqNote.charAt(0),
@@ -11,7 +10,7 @@ export default class EditCard extends Component {
         display:"sequence"
     }
     
-
+     
 
 
 
@@ -30,6 +29,7 @@ export default class EditCard extends Component {
       }
     
       render() {
+        
       if(this.state.display==="sequence"){
         return (
             <div style={{ height:'100%',width:'100%', borderLeft:"1px solid black", display:'flex',flexDirection:'column', justifyContent:'space-around'}}>
@@ -44,7 +44,8 @@ export default class EditCard extends Component {
                 <option value="C">C</option>
                 <option value="D">D</option>
                 <option value="E">E</option>
-                <option value="F">G</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
              </select>
              </div>
              <div style={{  border:'0px', justifyContent:'space-between', display:'flex'}}>

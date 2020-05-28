@@ -6,27 +6,23 @@ function Note(props) {
   const mesh = useRef()
    
   const noteColor={
-    "A":"#09FBD3",
-    "B":"#08F7fe",
-    "D":"#E92efb",
+    "A":"#08F7fe",
+    "B":"#21ff25",
+    "C":"#7122fa",
+    "D":"#FF3300",
     "E":"#ff2079",
-    "F":"#ff6ec7",
+    "F":"#FF0000",
     "G":"#F5D300"
   }
  
-  console.log(props.note)
- console.log(noteColor[props.note])
+  
 
   const [hovered, setHover] = useState(false)
-  // const [active, setActive] = useState(false)
-
+  
   
   useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01))
     const color= props.played===false? "white": noteColor[props.note]
-    // const onHover = useCallback((e, value) => {
-    //     e.stopPropagation();
-    //     setIsHovered(value);
-    //   }, [setIsHovered]);
+   
      
   
   return (

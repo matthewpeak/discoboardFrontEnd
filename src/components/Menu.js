@@ -33,7 +33,7 @@ export default class Menu extends Component {
     render() {
       const nodeRef = React.createRef(null);
        const {handlePlayButton,playing,handleAddSeq,handleSave,handleLoadLoop,handleEditSynth,synths,handleDiscoButton,Sequences,editSequences,handleRemoveSequence,handleEdit,notes,synthTypes}=this.props
-       console.log(Sequences.length)
+       
        let edit=editSequences===null?"Select A Sequence To Edit": <EditCard handleEditSynth={handleEditSynth} editSynth={synths[editSequences]} handleRemoveSequence={handleRemoveSequence} handleEdit={handleEdit}seqNote={notes[editSequences]} seqSynthType={synthTypes[editSequences]} seqLength={Sequences[editSequences].length} seqNum={editSequences}></EditCard>
         return (
            <Draggable nodeRef={nodeRef}>

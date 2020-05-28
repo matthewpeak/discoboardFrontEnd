@@ -98,11 +98,7 @@ export default class Board extends Component {
    
 
    async handleLoadLoop(songId){
-      /// gotta sort the ids and make sure they line up 
-
-
-
-      ///you addedorder to the sequence 
+     
         let extractionOfIdNotes=[]
         let newNotes=[]
         let newSeqIds=[]
@@ -128,11 +124,6 @@ export default class Board extends Component {
           newTests.push([])
         })
 
-        // return 
-        // console.log(newSequences)
-        // newSequences.sort((s1,s2)=>s1[2]-s2[2])
-        // console.log(newSequences)
-        // newSequences.forEach(s=> extractionOfIdNotes.push(s.splice(0,3)))
        
        
 
@@ -213,7 +204,7 @@ export default class Board extends Component {
     }
     
     editSequenceClick=(e,index)=>{
-      console.log(index)
+      
     
       this.setState({editSequences:index})
       
@@ -250,10 +241,7 @@ export default class Board extends Component {
         newSynth= new Tone.MembraneSynth().toMaster()
       }
  
-      // console.log(newSequence)
-      // console.log(newSynth)
-      // console.log(newSynthType)
-      // console.log(newNote)
+    
 
       let newSequences=[...this.state.Sequences]
       let newNotes=[...this.state.notes]
@@ -265,11 +253,6 @@ export default class Board extends Component {
       newSynthTypes.splice(index,1,newSynthType)
       newSynths.splice(index,1,newSynth)
  
-      // this.setState({notes:newNotes})
-      // this.setState({Sequences:newSequences})
-      // this.setState({synthTypes:newSynthTypes})
-      // this.setState({synths:newSynths})
-      // this.setState({editSequences:null})
        this.setState(prevState => ({
         Sequences:newSequences,
         notes:newNotes,
@@ -359,11 +342,7 @@ export default class Board extends Component {
       newSynthTypes.push(newSynthType)
       newSequences.push(newSequence)
      
-    //  this.setState({test:newTests})
-    //  this.setState({notes:newNotes})
-    //  this.setState({Sequences:newSequences})
-    //  this.setState({synthTypes:newSynthTypes})
-    //  this.setState({synths:newSynths})
+   
       this.setState(prevState => ({
       Sequences:newSequences,
       notes:newNotes,
@@ -371,11 +350,7 @@ export default class Board extends Component {
       synths:newSynths,
       synthTypes:newSynthTypes
     }));
-    //  this.setState({test:[...this.state.test,[]]})
-    //  this.setState({notes:[...this.state.notes,newNote]})
-    //  this.setState({Sequences:[...this.state.Sequences,newSequence]})
-    //  this.setState({synthTypes:[...this.state.synthTypes,newSynthType]})
-    //  this.setState({synths:[...this.state.synths,newSynth]})
+    
    
   }
 
@@ -397,8 +372,7 @@ export default class Board extends Component {
     
    handleEditSynth=(e,attack,decay,release,sustain,seqNum)=>{
       let newSynth= this.state.synths[seqNum]
-      console.log(parseFloat(attack))
-      console.log(newSynth.envelope.attack)
+      
       
       newSynth.envelope.attack= parseFloat(attack)
       newSynth.envelope.decay= parseFloat(decay)

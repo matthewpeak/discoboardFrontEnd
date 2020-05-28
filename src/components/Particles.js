@@ -10,11 +10,12 @@ function Particles({note,count,played,x}) {
             const dummy = useMemo(() => new THREE.Object3D(), [])
             var zex=x
             const noteColor={
-              "A":"#09FBD3",
-              "B":"#08F7fe",
-              "D":"#E92efb",
+              "A":"#08F7fe",
+              "B":"#21ff25",
+              "C":"#7122fa",
+              "D":"#FF3300",
               "E":"#ff2079",
-              "F":"#ff6ec7",
+              "F":"#FF0000",
               "G":"#F5D300"
             }
 

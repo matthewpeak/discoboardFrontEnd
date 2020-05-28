@@ -34,7 +34,7 @@ function Display({handleDisco,sequences,synths,notes,oldTests}) {
                  
                   newTest[i][0]=step; 
                   newTest.forEach(test=> test[0]===step?null:test[0]=null)
-                  console.log(newTest)
+                 
                   
                   setTests(newTest);
                  }
