@@ -12,16 +12,10 @@ code {
     monospace;
 }
 
-@font-face{ font-family: 'NeueMontreal';
-  src: local('NeueMontreal-Regular'), url(./fonts/NeueMontreal-Regular.otf) format('opentype');}
+
 
   @font-face{ font-family: 'Stellar';
     src: local('Stellar-Regular'), url(./fonts/Stellar-Regular.otf) format('opentype');}
-  @font-face{ font-family: 'AgrandirItalic';
-     src: local('Agrandir-WideBlackItalic'), url(./fonts/Agrandir-WideBlackItalic.otf) format('opentype');}
-     @font-face{ font-family: 'Agrandir';
-      src: local('Agrandir-TightBlack'), url(./fonts/Agrandir-TightBlack.otf) format('opentype');}
-      @font-face{ font-family: 'Grafier';
-        src: local('Grafier-Black'), url(./fonts/Grafier-Black.otf) format('opentype');}
+  
         @font-face{ font-family: 'GrafierDisplay';
           src: local('Grafier-BlackDisplay'), url(./fonts/Grafier-BlackDisplay.otf) format('opentype');}
