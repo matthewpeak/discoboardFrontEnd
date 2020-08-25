@@ -70,7 +70,7 @@ export default class Zzzaaa extends Component {
     return(
         
         <div style={{ position:'absolute', width: '100%', height: '100%' }}>
-         <Canvas  gl={{ antialias: false, alpha: false }} camera={{ fov: 75, position: [0, 0, 100] }} onCreated={({ gl }) => gl.setClearColor('black')}>>
+         <Canvas  gl={{ antialias: false, alpha: false }} camera={{ fov: 75, position: [0, 0, 1000] }} onCreated={({ gl }) => gl.setClearColor('black')}>>
               
               
              
