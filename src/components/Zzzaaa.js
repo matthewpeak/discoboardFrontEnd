@@ -66,7 +66,7 @@ export default class Zzzaaa extends Component {
         x=x+100;
     }
     let y = <group>{[...particlez]}</group>
-    // position: [0, 0, 1000] 
+    
     return(
         
         <div style={{ position:'absolute', width: '100%', height: '100%' }}>

@@ -9,14 +9,14 @@
     "css.gg": "^2.0.0",
     "drei": "0.0.40",
     "node-sass": "^4.14.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-draggable": "^4.4.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-draggable": "^4.4.3",
     "react-scripts": "3.4.1",
-    "react-three-fiber": "^4.2.4",
-    "styled-components": "^5.1.0",
+    "react-three-fiber": "^4.2.21",
+    "styled-components": "^5.3.0",
     "three": "^0.116.1",
-    "tone": "^13.8.25"
+    "tone": "^13.8.34"
   },
   "scripts": {
     "start": "react-scripts start",
