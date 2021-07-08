@@ -7,7 +7,7 @@ import AddSeq from './AddSeq'
 export default class Menu extends Component {
     state={
         menuSelect:"Add Sequence",
-        menuExpand: false
+        menuExpand: true
     }
     addSequenceButton=()=>{
         this.setState({menuSelect:"Add Sequence"})
