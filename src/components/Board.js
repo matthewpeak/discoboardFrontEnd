@@ -107,7 +107,7 @@ export default class Board extends Component {
         
         let newSequences= await fetch("http://localhost:3000/sequences")
         .then(res=>res.json())
-        .then(data=> data.filter(s => s.song_id==songId))
+        .then(data=> data.filter(s => s.song_id === songId))
         .then(newData=>{
           return newData.map(s=> Object.values(s))
         })
@@ -124,19 +124,32 @@ export default class Board extends Component {
           newTests.push([])
         })
 
-       
+      //   let newSynths= newSynthTypes.map(synth=>{
+      //     let newSynth=''
+      //      if(synth==="default"){
+      //         return new Tone.Synth().toMaster()
+      //      }else if(synth==="fm"){
+      //        return new Tone.FMSynth().toMaster()
+      //      }else if(synth==="am"){
+      //        return new Tone.AMSynth().toMaster()
+      //      }else if(synth==="mem"){
+      //        return new Tone.MembraneSynth().toMaster()
+      //      }
+      //  })
        
 
       let newSynths= newSynthTypes.map(synth=>{
+           let newSynth=''
             if(synth==="default"){
-               return new Tone.Synth().toMaster()
+              newSynth = new Tone.Synth().toMaster()
             }else if(synth==="fm"){
-              return new Tone.FMSynth().toMaster()
+              newSynth = new Tone.FMSynth().toMaster()
             }else if(synth==="am"){
-              return new Tone.AMSynth().toMaster()
+              newSynth = new Tone.AMSynth().toMaster()
             }else if(synth==="mem"){
-              return new Tone.MembraneSynth().toMaster()
+              newSynth = new Tone.MembraneSynth().toMaster()
             }
+            return newSynth
         })
         
      
@@ -205,10 +218,7 @@ export default class Board extends Component {
     
     editSequenceClick=(e,index)=>{
       
-    
       this.setState({editSequences:index})
-      
-      
       
     }
 
@@ -267,7 +277,7 @@ export default class Board extends Component {
       let newSequences=[...this.state.Sequences]
       newSequences[seqNum].push(false)
       this.setState({Sequences:newSequences})
-      if (!e) var e = window.event;
+      if (!e)  e = window.event;
       e.cancelBubble = true;
       if (e.stopPropagation) e.stopPropagation();
 
@@ -278,7 +288,7 @@ export default class Board extends Component {
         let newSequences=[...this.state.Sequences]
         newSequences[seqNum].pop()
         this.setState({Sequences:newSequences})
-       if (!e) var e = window.event;
+       if (!e)  e = window.event;
        e.cancelBubble = true;
        if (e.stopPropagation) e.stopPropagation();
     }

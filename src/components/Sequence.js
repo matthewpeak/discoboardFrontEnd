@@ -1,8 +1,7 @@
 import * as THREE from 'three'
-import React, { Component,Fragment } from 'react'
+import React, { Component} from 'react'
 import Note from './Note'
-import Tone from 'tone'
-import { Canvas, useFrame } from 'react-three-fiber'
+import { Canvas } from 'react-three-fiber'
 
 export default class Sequence extends Component {
    

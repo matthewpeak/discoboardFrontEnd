@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import React, { useMemo,useState } from 'react'
+import React, { useMemo} from 'react'
 import { useLoader, useUpdate } from 'react-three-fiber'
 
 export default function({ playing, handlePlay,children, vAlign = 'center', hAlign = 'center', size = 3, ...props }) {

@@ -1,5 +1,4 @@
 import * as THREE from 'three'
-
 import React, {  useRef, useMemo } from 'react'
 import {  useFrame } from 'react-three-fiber'
 
@@ -33,7 +32,7 @@ function Particles({note,count,played,x}) {
                 temp.push({ t, factor, speed, xFactor, yFactor, zFactor, mx: 0, my: 0 })
               }
               return temp
-            }, [count])
+            }, [count,x])
           
             useFrame(state => {
              if(played===false){
@@ -58,7 +57,7 @@ function Particles({note,count,played,x}) {
                     t = particle.t += speed / 2
                     const a = Math.cos(t) + Math.sin(t * 1) / 10
                     const b = Math.sin(t) + Math.cos(t * 2) / 10
-                    const s = Math.max(1.5, Math.cos(t) * 5)
+                    //const s = Math.max(1.5, Math.cos(t) * 5)
                     dummy.position.set(
                       (particle.mx / 10) * a + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 4,
                       (particle.my / 10) * b + yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
