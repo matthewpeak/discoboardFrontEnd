@@ -11,8 +11,6 @@ export default class AddSeq extends Component {
     }
     
 
-
-
     handleInputChange(event) {
         const target = event.target;
         const value = target.value ;
@@ -25,7 +23,6 @@ export default class AddSeq extends Component {
      
     render() {
         return (
-            //display:'flex',flexDirection:'column'
             <form  style={{ height:'100%',width:'100%', border:'0px', display:'flex',flexDirection:'column', justifyContent:'space-around'}}onSubmit={this.props.playing===false?e=> this.props.handleAddSeq(e):e=> e.preventDefault()}>
             <div style={{  border:'0px', justifyContent:'space-between', display:'flex'}}>
             <label className='label'>
@@ -88,7 +85,6 @@ export default class AddSeq extends Component {
                 <option value="12">12</option>
              </select>
              </div>
-           
             <input className='submit' type="submit" value={this.props.playing===false?"Add Sequence":"Pause Music to Add"} />
           </form>
             
