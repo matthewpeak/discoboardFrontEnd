@@ -12,7 +12,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-draggable": "^4.4.3",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "react-three-fiber": "^4.2.21",
     "styled-components": "^5.3.0",
     "three": "^0.130.1",
